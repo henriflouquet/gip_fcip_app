@@ -2,7 +2,7 @@ import React from 'react';
 import { Image, Text, View } from 'react-native';
 
 import Card from './ui/card.js';
-import theme from '../theme';
+import theme from '../theme.js';
 
 const CardAccueil = ({ text, image, width = 70, onPress }) => {
   return (

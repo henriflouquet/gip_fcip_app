@@ -4,8 +4,8 @@ import { Dimensions, Image, Text, View, TouchableOpacity } from 'react-native';
 import { AlphabetList } from 'react-native-section-alphabet-list';
 import styled from 'styled-components';
 
-import CustomTab from '../components/custom-tab.js';
-import SearchBar from '../components/search-bar.js';
+import CustomTab from '../components/customTab.js';
+import SearchBar from '../components/searchBar.js';
 import theme from '../theme.js';
 
 const { height } = Dimensions.get('window');

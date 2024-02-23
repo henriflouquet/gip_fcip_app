@@ -10,10 +10,10 @@ import {
 } from 'react-native';
 import styled from 'styled-components';
 
-import ContactInfo from '../components/contact-info.js';
-import CustomTab from '../components/custom-tab.js';
-import InitialsCircle from '../components/initials-circle.js';
-import SearchBar from '../components/search-bar.js';
+import ContactInfo from '../components/contactInfo.js';
+import CustomTab from '../components/customTab.js';
+import InitialsCircle from '../components/initialsCircle.js';
+import SearchBar from '../components/searchBar.js';
 import Card from '../components/ui/card.js';
 import theme from '../theme.js';
 

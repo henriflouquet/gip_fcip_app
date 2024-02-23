@@ -3,9 +3,10 @@ import React from 'react';
 import { Image, Text, View } from 'react-native';
 import styled from 'styled-components';
 
-import CardAccueil from '../components/card-accueil.js';
-import InitialsCircle from '../components/initials-circle.js';
-import SearchBar from '../components/search-bar.js';
+import CardAccueil from '../components/cardAccueil.js';
+import InitialsCircle from '../components/initialsCircle.js';
+import SearchBar from '../components/searchBar.js';
+import { useAuth } from '../hooks/useAuth.js';
 import theme from '../theme.js';
 
 const SContainer = styled.View`
@@ -24,6 +25,8 @@ const SCardContainer = styled.View`
 
 const Accueil = () => {
   const navigation = useNavigation();
+  const { user } = useAuth();
+  console.log('user accueil', user);
   return (
     <SContainer>
       <View flex={1} rowGap={50}>

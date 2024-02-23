@@ -2,9 +2,9 @@ import React from 'react';
 import { Dimensions, Image, Text, View } from 'react-native';
 import styled from 'styled-components';
 
-import CardContact from '../components/card-contact.js';
-import ContactInfo from '../components/contact-info.js';
-import InitialsCircle from '../components/initials-circle.js';
+import CardContact from '../components/cardContact.js';
+import ContactInfo from '../components/contactInfo.js';
+import InitialsCircle from '../components/initialsCircle.js';
 import Card from '../components/ui/card.js';
 import theme from '../theme.js';
 
@@ -13,7 +13,7 @@ const width = Dimensions.get('window').width;
 const SContainer = styled.View`
   flex: 1;
   align-items: center;
-  padding-horizontal: ${theme.spaces.md}px;
+  padding-horizontal: ${theme.spaces.lg}px;
   row-gap: ${theme.spaces.md}px;
 `;
 const SRound = styled.View`

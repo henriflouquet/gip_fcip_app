@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, ScrollView, Linking } from 'react-native';
+import { Text, ScrollView, Linking, Dimensions } from 'react-native';
 import styled from 'styled-components';
 
 import CustomTab from '../components/customTab.js';
@@ -25,9 +25,11 @@ const Question = ({ route }) => {
     texteLien,
     texteContactTel,
   } = route?.params?.question;
+
+  const { height } = Dimensions.get('window');
   return (
     <>
-      <ScrollView>
+      <ScrollView contentContainerStyle={{ paddingBottom: height * 0.12 + 40 }}>
         <SContainer>
           <Text style={{ fontSize: theme.font.sizes.xl }}>{title}</Text>
           <Text style={{ textAlign: 'justify' }}>{answer}</Text>

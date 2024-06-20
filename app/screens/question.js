@@ -45,7 +45,9 @@ const Question = ({ route }) => {
         {contactTel && (
           <Button
             text={`Appeler ${texteContactTel || contactTel}`}
-            onPress={() => Linking.openURL(`tel:${contactTel}`)}
+            onPress={() =>
+              Linking.openURL(`tel:${contactTel.replace(/\s/g, '')}`)
+            }
           />
         )}
       </SContainer>

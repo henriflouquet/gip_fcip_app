@@ -28,13 +28,14 @@ const SContainer = styled.View`
 `;
 
 const ContactInstance = ({ navigation, route }) => {
+  const baseUrl = process.env.EXPO_PUBLIC_API_URL;
   const type = route?.params?.type || 'user';
   const person = route?.params?.person;
   const contactId = route?.params?.contactId;
   const cardWidth = width - theme.spaces.md * 2;
 
   const { response, loading, error } = useFetch(
-    `http://localhost:1337/api/${type}s/${contactId}?populate=*`,
+    `${baseUrl}${type}s/${contactId}?populate=*`,
   );
 
   const contact = response?.data?.attributes;
@@ -165,7 +166,9 @@ const ContactInstance = ({ navigation, route }) => {
         {contact?.tel && (
           <CardContact
             text="APPEL"
-            onPress={() => Linking.openURL(`tel:${contact?.tel}`)}
+            onPress={() =>
+              Linking.openURL(`tel:${contact?.tel.replace(/\s/g, '')}`)
+            }
             image={require('../assets/tel-bleu.png')}
           />
         )}

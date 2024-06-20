@@ -29,12 +29,13 @@ const SContentContainer = styled.View`
 `;
 
 const Annuaire = () => {
+  const baseUrl = process.env.EXPO_PUBLIC_API_URL;
   const heightImg = 70;
   const cardWidth = width - theme.spaces.md * 2;
   const [searchResults, setSearchResults] = useState([]);
   const navigation = useNavigation();
   const { response, loading, error } = useFetch(
-    'http://localhost:1337/api/departements?&populate=users',
+    `${baseUrl}departements?&populate=users`,
   );
 
   const filterContacts = useCallback(

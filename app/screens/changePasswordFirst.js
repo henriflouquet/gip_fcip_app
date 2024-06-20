@@ -24,6 +24,7 @@ const STextError = styled.Text`
 `;
 
 const ChangePasswordFirst = ({ route }) => {
+  const baseUrl = process.env.EXPO_PUBLIC_API_URL;
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [error, setError] = useState('');
@@ -43,7 +44,7 @@ const ChangePasswordFirst = ({ route }) => {
   const handleSuccessChange = useCallback(
     (json) => {
       try {
-        fetch(`http://localhost:1337/api/users/${user.id}`, {
+        fetch(`${baseUrl}users/${user.id}`, {
           method: 'PUT',
           headers: {
             Authorization: `Bearer ${json.jwt}`,
@@ -82,7 +83,7 @@ const ChangePasswordFirst = ({ route }) => {
 
   const handleSubmit = useCallback(() => {
     try {
-      fetch('http://localhost:1337/api/auth/change-password', {
+      fetch(`${baseUrl}auth/change-password`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,

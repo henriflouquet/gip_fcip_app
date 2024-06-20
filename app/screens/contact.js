@@ -20,12 +20,13 @@ const SContainer = styled.View`
 `;
 
 const Contact = ({ navigation, route }) => {
+  const baseUrl = process.env.EXPO_PUBLIC_API_URL;
   const type = route?.params?.type || 'user';
   const personId = route?.params?.personId;
   const person = route?.params?.person;
   const cardWidth = width - theme.spaces.md * 2;
   const { response, loading, error } = useFetch(
-    `http://localhost:1337/api/${type}s/${personId}?populate=*`,
+    `${baseUrl}${type}s/${personId}?populate=*`,
   );
 
   const departement = response?.departement?.name;
@@ -59,7 +60,9 @@ const Contact = ({ navigation, route }) => {
         {person?.tel && (
           <CardContact
             text="APPEL"
-            onPress={() => Linking.openURL(`tel:${person?.tel}`)}
+            onPress={() =>
+              Linking.openURL(`tel:${person?.tel.replace(/\s/g, '')}`)
+            }
             image={require('../assets/tel-bleu.png')}
           />
         )}

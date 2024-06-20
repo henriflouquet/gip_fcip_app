@@ -22,12 +22,12 @@ const SContentContainer = styled.View`
 `;
 
 const Contacts = () => {
+  const baseUrl = process.env.EXPO_PUBLIC_API_URL;
   const navigation = useNavigation();
   const [searchResults, setSearchResults] = useState([]);
   const { response, loading, error } = useFetch(
-    'http://localhost:1337/api/users?populate=instances',
+    `${baseUrl}users?populate=instances`,
   );
-  
 
   const filterContacts = useCallback(
     (val) => {
@@ -39,7 +39,9 @@ const Contacts = () => {
             el?.dossiers?.toLowerCase().includes(val.toLowerCase()) ||
             el?.fonction?.toLowerCase().includes(val.toLowerCase()) ||
             el?.pole?.toLowerCase().includes(val.toLowerCase()) ||
-            el?.instances?.some((instance) => instance?.name.toLowerCase().includes(val.toLowerCase())),
+            el?.instances?.some((instance) =>
+              instance?.name.toLowerCase().includes(val.toLowerCase()),
+            ),
         );
         if (val === '' || filtered?.length === 0) {
           setSearchResults([]);

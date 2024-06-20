@@ -24,6 +24,7 @@ const STextError = styled.Text`
 `;
 
 const ForgotPassword = () => {
+  const baseUrl = process.env.EXPO_PUBLIC_API_URL;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
@@ -53,7 +54,7 @@ const ForgotPassword = () => {
 
   const handleSubmitForgot = useCallback(() => {
     console.log('Submitting forgot password request for email:', email);
-    fetch('http://localhost:1337/api/auth/forgot-password', {
+    fetch(`${baseUrl}auth/forgot-password`, {
       method: 'POST',
       body: JSON.stringify({
         email,
@@ -84,7 +85,7 @@ const ForgotPassword = () => {
 
   const handleResetPassword = useCallback(() => {
     try {
-      fetch('http://localhost:1337/api/auth/reset-password', {
+      fetch(`${baseUrl}auth/reset-password`, {
         method: 'POST',
         body: JSON.stringify({
           password,

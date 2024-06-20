@@ -19,14 +19,13 @@ const SContainer = styled.View`
 
 const FAQ = () => {
   const navigation = useNavigation();
-  const { response, loading, error } = useFetch(
-    'http://localhost:1337/api/questions',
-  );
+  const baseUrl = process.env.EXPO_PUBLIC_API_URL;
+  const { response, loading, error } = useFetch(`${baseUrl}questions`);
 
   const navigateToQuestion = useCallback(
     (question) => {
       navigation.navigate('Question', {
-       question: question.attributes,
+        question: question.attributes,
       });
     },
     [navigation],

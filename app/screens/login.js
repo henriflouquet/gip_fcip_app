@@ -25,6 +25,7 @@ const STextError = styled.Text`
 `;
 
 const Login = () => {
+  const baseUrl = process.env.EXPO_PUBLIC_API_URL;
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -68,7 +69,7 @@ const Login = () => {
     AsyncStorage.getItem('token').then((token) => {
       if (token) {
         updateToken(token);
-        fetch('http://localhost:1337/api/users/me', {
+        fetch(`${baseUrl}users/me`, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,
@@ -90,7 +91,7 @@ const Login = () => {
         );
       }
     });
-  }, [updateToken, updateUser]);
+  }, [baseUrl, updateToken, updateUser]);
 
   const handleUsernameChange = useCallback((username) => {
     setUsername(username);
@@ -106,7 +107,7 @@ const Login = () => {
   }, [navigation]);
 
   const handleSubmit = useCallback(() => {
-    fetch('http://localhost:1337/api/auth/local', {
+    fetch(`${baseUrl}auth/local`, {
       method: 'POST',
       body: JSON.stringify({
         identifier: username,
@@ -135,7 +136,7 @@ const Login = () => {
           }
         }
       });
-  }, [username, password, updateToken, updateUser]);
+  }, [baseUrl, username, password, updateToken, updateUser]);
 
   return (
     <SContainer>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Linking } from 'react-native';
+import { Text, ScrollView, Linking } from 'react-native';
 import styled from 'styled-components';
 
 import CustomTab from '../components/customTab.js';
@@ -27,30 +27,32 @@ const Question = ({ route }) => {
   } = route?.params?.question;
   return (
     <>
-      <SContainer>
-        <Text style={{ fontSize: theme.font.sizes.xl }}>{title}</Text>
-        <Text style={{ textAlign: 'justify' }}>{answer}</Text>
-        {lien && (
-          <Button
-            text={texteLien || lien}
-            onPress={() => Linking.openURL(lien)}
-          />
-        )}
-        {contactEmail && (
-          <Button
-            text={`Contacter par email: ${contactEmail}`}
-            onPress={() => Linking.openURL(`mailto:${contactEmail}`)}
-          />
-        )}
-        {contactTel && (
-          <Button
-            text={`Appeler ${texteContactTel || contactTel}`}
-            onPress={() =>
-              Linking.openURL(`tel:${contactTel.replace(/\s/g, '')}`)
-            }
-          />
-        )}
-      </SContainer>
+      <ScrollView>
+        <SContainer>
+          <Text style={{ fontSize: theme.font.sizes.xl }}>{title}</Text>
+          <Text style={{ textAlign: 'justify' }}>{answer}</Text>
+          {lien && (
+            <Button
+              text={texteLien || lien}
+              onPress={() => Linking.openURL(lien)}
+            />
+          )}
+          {contactEmail && (
+            <Button
+              text={`Contacter par email: ${contactEmail}`}
+              onPress={() => Linking.openURL(`mailto:${contactEmail}`)}
+            />
+          )}
+          {contactTel && (
+            <Button
+              text={`Appeler ${texteContactTel || contactTel}`}
+              onPress={() =>
+                Linking.openURL(`tel:${contactTel.replace(/\s/g, '')}`)
+              }
+            />
+          )}
+        </SContainer>
+      </ScrollView>
       <CustomTab />
     </>
   );

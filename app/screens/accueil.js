@@ -26,12 +26,11 @@ const SCardContainer = styled.View`
 const Accueil = () => {
   const navigation = useNavigation();
   const { user } = useAuth();
-  console.log('user accueil', user);
   return (
     <SContainer>
       <View flex={1} rowGap={50}>
         <View alignItems="center">
-          <InitialsCircle text="O B" />
+          <InitialsCircle text={user?.prenom[0] + user?.nom[0]} />
           <Text>Bonjour</Text>
           <Text
             style={{
@@ -41,10 +40,11 @@ const Accueil = () => {
               color: theme.colors.navy,
             }}
           >
-            Océane BARLET
+            {user?.prenom} {user?.nom}
           </Text>
         </View>
-        <SearchBar />
+        {/* <SearchBar /> */}
+        <View height={20} />
         <SCardContainer>
           <CardAccueil
             // eslint-disable-next-line quotes

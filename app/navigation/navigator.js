@@ -7,11 +7,15 @@ import CustomHeader from '../components/customHeader.js';
 import { useAuth } from '../hooks/useAuth.js';
 import Accueil from '../screens/accueil.js';
 import Annuaire from '../screens/annuaire.js';
+import ChangePasswordFirst from '../screens/changePasswordFirst.js';
 import Contact from '../screens/contact.js';
+import ContactInstance from '../screens/contactInstance.js';
 import Contacts from '../screens/contacts.js';
 import FAQ from '../screens/faq.js';
+import ForgotPassword from '../screens/forgotPassword.js';
 import Login from '../screens/login.js';
 import Profil from '../screens/profil.js';
+import Question from '../screens/question.js';
 import theme from '../theme.js';
 
 const Stack = createStackNavigator();
@@ -29,11 +33,19 @@ export default function Navigator() {
         }}
       >
         {!isLoggedIn ? (
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="Login"
-            component={Login}
-          />
+          <>
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="Login"
+              component={Login}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="ChangePasswordFirst"
+              component={ChangePasswordFirst}
+            />
+            <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+          </>
         ) : (
           <>
             <Stack.Screen name="Accueil" component={Accueil} />
@@ -42,6 +54,8 @@ export default function Navigator() {
             <Stack.Screen name="Contacts" component={Contacts} />
             <Stack.Screen name="Profil" component={Profil} />
             <Stack.Screen name="Contact" component={Contact} />
+            <Stack.Screen name="Question" component={Question} />
+            <Stack.Screen name="ContactInstance" component={ContactInstance} />
           </>
         )}
       </Stack.Navigator>

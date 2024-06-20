@@ -1,86 +1,129 @@
-import React from 'react';
-import { Dimensions, Image, Text, View } from 'react-native';
+import React, { useMemo, useCallback } from 'react';
+import { Dimensions, Image, Text, Linking, View } from 'react-native';
 import styled from 'styled-components';
 
 import CardContact from '../components/cardContact.js';
 import ContactInfo from '../components/contactInfo.js';
+import CustomTab from '../components/customTab.js';
 import InitialsCircle from '../components/initialsCircle.js';
 import Card from '../components/ui/card.js';
+import useFetch from '../hooks/useFetch.js';
 import theme from '../theme.js';
 
-const width = Dimensions.get('window').width;
+const { width, height } = Dimensions.get('window');
 
 const SContainer = styled.View`
   flex: 1;
   align-items: center;
-  padding-horizontal: ${theme.spaces.lg}px;
   row-gap: ${theme.spaces.md}px;
-`;
-const SRound = styled.View`
-  width: 80px;
-  height: 80px;
-  border-radius: 40px;
-  background-color: ${theme.colors.navy};
-  align-items: center;
-  justify-content: center;
+  padding-horizontal: ${theme.spaces.lg}px;
 `;
 
 const Contact = ({ navigation, route }) => {
-  const type = route?.params?.type || 'contact';
+  const type = route?.params?.type || 'user';
+  const personId = route?.params?.personId;
+  const person = route?.params?.person;
+  const cardWidth = width - theme.spaces.md * 2;
+  const { response, loading, error } = useFetch(
+    `http://localhost:1337/api/${type}s/${personId}?populate=*`,
+  );
+
+  const departement = response?.departement?.name;
+  const instance = response?.instances?.[0]?.name;
 
   return (
     <SContainer>
-      {type === 'contact' ? (
-        <>
-          <InitialsCircle text="O B" />
-          <Text
-            style={{
-              textAlign: 'center',
-              fontWeight: 'bold',
-              fontSize: theme.font.sizes.lg,
-              color: theme.colors.navy,
-            }}
-          >
-            Océane BARLET
+      <>
+        <InitialsCircle text={`${person?.prenom[0]}${person?.nom[0]}`} />
+        <Text
+          style={{
+            textAlign: 'center',
+            fontWeight: 'bold',
+            fontSize: theme.font.sizes.lg,
+            color: theme.colors.navy,
+          }}
+        >
+          {person?.prenom} {person?.nom}
+        </Text>
+        {(departement || instance) && (
+          <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>
+            {departement || instance}
           </Text>
-          <Text style={{ textAlign: 'center' }}>
-            Assistante administrative chargée de la gestion des contrats
-            d'apprentissage OPCO
-          </Text>
-        </>
-      ) : (
-        <View rowGap={theme.spaces.sm} alignItems="center">
-          <Image
-            source={require('../assets/departement-coul.png')}
-            style={{ width: 70, height: 70 }}
-          />
-          <Text
-            style={{ color: theme.colors.blue, fontSize: theme.font.sizes.lg }}
-          >
-            Département Apprentissage
-          </Text>
-        </View>
-      )}
+        )}
+        {person?.fonction && (
+          <Text style={{ textAlign: 'center' }}>{person?.fonction}</Text>
+        )}
+      </>
 
       <View flexDirection="row" columnGap={theme.spaces.md}>
-        <CardContact text="APPEL" image={require('../assets/tel-bleu.png')} />
-        <CardContact text="MESSAGE" image={require('../assets/sms-bleu.png')} />
-        <CardContact
-          width={20 * (500 / 369)}
-          text="EMAIL"
-          image={require('../assets/mail-bleu.png')}
-        />
+        {person?.tel && (
+          <CardContact
+            text="APPEL"
+            onPress={() => Linking.openURL(`tel:${person?.tel}`)}
+            image={require('../assets/tel-bleu.png')}
+          />
+        )}
+
+        {person?.email && (
+          <CardContact
+            width={20 * (500 / 369)}
+            text="EMAIL"
+            onPress={() => Linking.openURL(`mailto:${person?.email}`)}
+            image={require('../assets/mail-bleu.png')}
+          />
+        )}
       </View>
-      <Card
-        minWidth={width - theme.spaces.md * 2}
-        minHeight={0}
-        paddingVertical={theme.spaces.lg}
-        alignItems="flex-start"
-      >
-        <View marginLeft={theme.spaces.lg} rowGap={theme.spaces.sm}>
-          <ContactInfo telMobile="06 03 26 49 76" email="test@gmail.com" />
-        </View>
-      </Card>
+      <View alignItems="center">
+        <Card
+          minWidth={cardWidth}
+          paddingTop={theme.spaces.lg}
+          alignItems="flex-start"
+          maxHeight={height / 2}
+          minHeight={0}
+        >
+          <View
+            marginLeft={theme.spaces.lg}
+            rowGap={theme.spaces.sm}
+            padding={theme.spaces.lg}
+          >
+            <ContactInfo
+              telMobile={person?.tel}
+              email={person?.displayEmail || person?.email}
+            />
+            {person?.dossiers && (
+              <View width={cardWidth - theme.spaces.lg * 2}>
+                <View alignItems="center">
+                  <View
+                    borderBottomWidth={2}
+                    paddingTop={theme.spaces.rg}
+                    marginBottom={theme.spaces.rg}
+                    borderBottomColor={theme.colors.inputGrey}
+                    width="100%"
+                  />
+                </View>
+                <Text
+                  style={{
+                    fontWeight: 'bold',
+                    textAlign: 'center',
+                    fontSize: theme.font.sizes.lg,
+                  }}
+                >
+                  Dossiers
+                </Text>
+                <Text
+                  style={{
+                    paddingLeft: theme.spaces.md,
+                    paddingTop: theme.spaces.sm,
+                  }}
+                >
+                  {person?.dossiers}
+                </Text>
+              </View>
+            )}
+          </View>
+        </Card>
+      </View>
+      <CustomTab />
     </SContainer>
   );
 };

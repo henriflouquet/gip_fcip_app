@@ -28,7 +28,7 @@ const InitialsCircle = ({
           fontSize,
         }}
       >
-        {text}
+        {text && text?.toUpperCase()}
       </Text>
     </SRound>
   );

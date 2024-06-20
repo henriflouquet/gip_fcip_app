@@ -1,17 +1,17 @@
-import React, { createContext, useContext, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { createContext, useContext, useState } from 'react';
 
 // Create a context for the auth
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [authToken, setAuthToken] = useState(null);
+  const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // Function to update the token
   const updateToken = (newToken) => {
-    setAuthToken(newToken);
+    setToken(newToken);
   };
 
   const updateUser = (user) => {
@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     AsyncStorage.removeItem('token').then(() => {
-      setAuthToken(null);
+      setToken(null);
       setUser(null);
       setIsLoggedIn(false);
     });
@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
-        authToken,
+        token,
         updateToken,
         user,
         updateUser,

@@ -5,7 +5,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import theme from '../theme';
 
 const CustomHeader = ({ navigation, route }) => {
-  console.log(route);
   const insets = useSafeAreaInsets();
   return (
     <View
@@ -25,12 +24,14 @@ const CustomHeader = ({ navigation, route }) => {
           />
         </TouchableOpacity>
       )}
-      <TouchableOpacity onPress={() => navigation.navigate('Profil')}>
-        <Image
-          source={require('../assets/profil-gris.png')}
-          style={{ width: 30 * (500 / 621), height: 30 }}
-        />
-      </TouchableOpacity>
+      {route.name !== 'ForgotPassword' && (
+        <TouchableOpacity onPress={() => navigation.navigate('Profil')}>
+          <Image
+            source={require('../assets/profil-gris.png')}
+            style={{ width: 30 * (500 / 621), height: 30 }}
+          />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
